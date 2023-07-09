@@ -1,4 +1,4 @@
-# Informações sobre o Classificador:
+# Informações sobre o Aprovador de Crédito:
 > Neste trabalho eu tive que construir um classificador para apoio à decisão de aprovação de crédito.
 
 A ideia foi identificar, dentre os clientes que solicitam um produto de crédito (como um cartão de crédito ou um empréstimo pessoal, por exemplo) e que cumprem os pré-requisitos essenciais para a aprovação do crédito, aqueles que apresentem alto risco de não conseguirem honrar o pagamento, tornando-se inadimplentes.
