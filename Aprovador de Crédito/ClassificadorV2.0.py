@@ -14,24 +14,47 @@ data = pd.read_csv('./Data/conjunto_de_treinamento.csv')
 ###########################################################################
 ## Arrumando os dados de ajuste do classificador
 ###########################################################################
-## Eliminando colunas que julguei pouco eficientes
+### Avaliando o que fazer com cada coluna
+
+# Id --> Remover, não agrega informação útil
+# Grau de instrução --> Remover, todas as celulas tem o mesmo valor
+# Estado onde nassceu --> Remover, cardinalidade alta
+# Estado onde reside --> Remover, cardinalidade alta
+# codigo de area telefone residencial --> Remover, cardinalidade alta
+# qqtd contas bancarias especiais --> Remover, pouca informação extra
+# estado onde trabalha --> Remover, muitos campos em branco
+# codigo de area telefone trabalho --> Remover, cardinalidade alta
+# grau de instrução do companheiro --> Remover, muitos campos em branco
+# Profissão companheiro --> Remover, muitos campos em branco
+
+# Forma de envio --> binarizar
+# Sexo -- binarizar
+# Possui telefone --> binarizar
+# Possui telefone celular --> binarizar
+# vinculo formal cocm a empresa --> binarizar
+# Possui telefone de trabalho --> binarizar
+
+
+# Profissao --> preencehr campos vazios
+# Ocupação --> preencher campos vazios
+
+###########################################################################
+## Removendo Variaveis
 ###########################################################################
 x = data.drop(columns = 
               ["inadimplente",
                "id_solicitante",
-               "estado_onde_nasceu",
-               "possui_email",
-               "possui_telefone_trabalho",
-               "codigo_area_telefone_trabalho",
-               'tipo_endereco',
                "grau_instrucao",
-               "possui_telefone_celular",
+               "estado_onde_nasceu",
+               "estado_onde_reside",
+               "codigo_area_telefone_residencial",
                "qtde_contas_bancarias_especiais",
-               "meses_no_trabalho",
-               "estado_onde_reside"])
+               "estado_onde_trabalha",
+               "codigo_area_telefone_trabalho",
+               "grau_instrucao_companheiro",
+               "profissao_companheiro"], axis=1)
 
 y = data["inadimplente"]
-
 
 ###########################################################################
 ## Transformando colunas com valores do tipo string em int
