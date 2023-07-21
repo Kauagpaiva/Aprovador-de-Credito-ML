@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from sklearn.preprocessing import LabelEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
@@ -98,6 +99,11 @@ x_teste = StdSc.transform(x_teste)
 ###########################################################################
 ## Treinando o classificador 
 ###########################################################################
+
+def rmspe(y, y_resposta):
+    value = np.sqrt(np.mean(np.square(((y - y_resposta) / y)), axis=0))
+    return value
+
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
 
 regressorGB = HistGradientBoostingRegressor(l2_regularization=34, max_iter=140, loss = "absolute_error", max_depth=12)
@@ -107,6 +113,7 @@ gbError = mean_squared_error(y_test, gbPredictions)
 gbScore = r2_score(y_test, gbPredictions)
 print("GB Error was: ", gbError)
 print("GB Score was: ", gbScore)
+print("GB rnmspe score wass: ", rmspe(y_test, gbPredictions))
 
 regressorKNN = KNeighborsRegressor(n_neighbors=10, p=1, n_jobs=2, algorithm='kd_tree', weights='distance')
 regressorKNN = regressorKNN.fit(x_train,y_train)
@@ -115,6 +122,7 @@ knnError = mean_squared_error(y_test, knnPredictions)
 knnScore = r2_score(y_test, knnPredictions)
 print("KNN Error was: ", knnError)
 print("KNN Score was: ", knnScore)
+print("KNN rnmspe score wass: ", rmspe(y_test, knnPredictions))
 
 ###########################################################################
 ## Prevendo os resultados e colocando eles no arquivo de resultados
