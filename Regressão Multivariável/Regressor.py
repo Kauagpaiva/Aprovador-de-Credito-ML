@@ -39,17 +39,15 @@ y = data['preco']
 ###########################################################################
 
 x = pd.get_dummies(x, columns = ['tipo'])
-x = x.drop(columns = ['tipo_Loft'])
-x = x.drop(columns = ['tipo_Quitinete'])
+x = x.drop(columns = ['tipo_Loft', 'tipo_Quitinete'])
 print(x.T)
 
 ###########################################################################
 ### Aplicando binarização
 ###########################################################################
 
-for coluna in [ 'bairro']:
-    binarizador = LabelEncoder()
-    x[coluna] = binarizador.fit_transform(x[coluna])
+binarizador = LabelEncoder()
+x['bairro'] = binarizador.fit_transform(x['bairro'])
 
 print( x.T)
 
@@ -86,9 +84,8 @@ x_teste = data_teste.drop(columns =
 x_teste = pd.get_dummies(x_teste, columns = ['tipo'])
 x_teste = x_teste.drop(columns = ['tipo_Loft'])
 
-for coluna in ['bairro']:
-    binarizador = LabelEncoder()
-    x_teste[coluna] = binarizador.fit_transform(x_teste[coluna])
+binarizador = LabelEncoder()
+x_teste['bairro'] = binarizador.fit_transform(x_teste['bairro'])
     
 imputer = SimpleImputer(strategy='most_frequent')
 x_teste = imputer.fit_transform(x_teste)
@@ -119,10 +116,12 @@ knnScore = r2_score(y_test, knnPredictions)
 print("KNN Error was: ", knnError)
 print("KNN Score was: ", knnScore)
 
+###########################################################################
+## Prevendo os resultados e colocando eles no arquivo de resultados
+###########################################################################
 
-
-y_resposta = regressorGB.predict(x_teste)
-prediction_file = {'Id': testId.index , 'preco': y_resposta}
+resposta = regressorGB.predict(x_teste)
+prediction_file = {'Id': testId.index , 'preco': resposta}
 prediction_file = pd.DataFrame(data=prediction_file)
 
 prediction_file.to_csv('Resultado.csv', index=False)
