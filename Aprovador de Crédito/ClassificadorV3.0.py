@@ -5,8 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GridSearchCV
-from sklearn.preprocessing import LabelBinarizer
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, AdaBoostClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 
 data_teste = pd.read_csv('./Data/conjunto_de_teste.csv')
 testId = data_teste["id_solicitante"]
@@ -180,71 +179,73 @@ x_teste = StdSc.transform(x_teste)
 ###########################################################################
 #x_train2, x_test2, y_train2, y_test2 = train_test_split(x, y, test_size=0.7)
 
-#testClassifier = RandomForestClassifier()
-#testClassifier.fit(x_train2, y_train2)
+#rfClassifier = RandomForestClassifier()
+#rfClassifier.fit(x_train2, y_train2)
 
-#testPredictions = testClassifier.predict(x_test2)
-#testScore = accuracy_score(y_test2, testPredictions)
-#print("testScore was: ", testScore)
-
-#parameters = {
-    #"max_depth":[8],
-    #"n_estimators": [500],
-    #"min_samples_leaf":[10]
-    #}
-
-#gridRF = GridSearchCV(RandomForestClassifier(), parameters, cv=10, verbose=2, n_jobs = -1)
-#gridRF.fit(x_train2, y_train2)
-
-#bestRF = gridRF.best_estimator_
-#bestRF.fit(x_train2,y_train2)
-#respostaRF = bestRF.predict(x_test2)
-#testScore2 = accuracy_score(y_test2, respostaRF)
-#print("SecondTestScore was: ", testScore2)
-###########################################################################
-## Treinando o classificador 
-###########################################################################
-x_train2, x_test2, y_train2, y_test2 = train_test_split(x, y, test_size=0.7)
-
-#clfGB = GradientBoostingClassifier(n_estimators=80, max_depth=6, random_state=1500)
-#pred = clfGB.fit(x_train2, y_train2).predict(x_test2)
-#print(accuracy_score(y_test2,pred))
-
-parametersGB = {
-    "max_depth":[6],
-    "n_estimators": [80],
-    "random_state":[1500]
-    }
-
-gridGB = GridSearchCV(GradientBoostingClassifier(), parametersGB, cv=10, n_jobs = -1)
-gridGB.fit(x_train2, y_train2)
-
-bestGB = gridGB.best_estimator_
-bestGB.fit(x, y)
-
-####
+#rfPredictions = rfClassifier.predict(x_test2)
+#rfScore = accuracy_score(y_test2, rfPredictions)
+#print("RF Score was: ", rfScore)
 
 #parametersRF = {
-    #"max_depth":[8],
-    #"n_estimators": [500],
-    #"min_samples_leaf":[10]
+ #   "max_depth":[8],
+  #  "n_estimators": [500],
+   # "min_samples_leaf":[10]
     #}
 
 #gridRF = GridSearchCV(RandomForestClassifier(), parametersRF, cv=10, n_jobs = -1)
 #gridRF.fit(x_train2, y_train2)
 
 #bestRF = gridRF.best_estimator_
-#bestRF.fit(x, y)
+#bestRF.fit(x_train2,y_train2)
+#respostaRF = bestRF.predict(x_test2)
+#rfScore2 = accuracy_score(y_test2, respostaRF)
+#print("Second RF Score was: ", rfScore2)
+
+###
+
+
+#gbClassifier = GradientBoostingClassifier(n_estimators=80, max_depth=6, random_state=1500)
+#gbPredictions = gbClassifier.fit(x_train2, y_train2).predict(x_test2)
+#gbScore = accuracy_score(y_test2, gbPredictions)
+#print("GB Score was: ", gbScore)
+
+
+#parametersGB = {
+ #   "max_depth":[6],
+  #  "n_estimators": [80],
+   # "random_state":[1500]
+    #}
+
+#gridGB = GridSearchCV(GradientBoostingClassifier(), parametersGB, cv=10, n_jobs = -1)
+#gridGB.fit(x_train2, y_train2)
+
+#bestGB = gridGB.best_estimator_
+#bestGB.fit(x_train2,y_train2)
+#respostaGB = bestGB.predict(x_test2)
+#gbScore2 = accuracy_score(y_test2, respostaGB)
+#print("Second GB Score was: ", gbScore2)
+###########################################################################
+## Treinando o classificador 
+###########################################################################
+x_train2, x_test2, y_train2, y_test2 = train_test_split(x, y, test_size=0.7)
+
+parametersRF = {
+    "max_depth":[8],
+    "n_estimators": [500],
+    "min_samples_leaf":[10]
+    }
+
+gridRF = GridSearchCV(RandomForestClassifier(), parametersRF, cv=10, n_jobs = -1)
+gridRF.fit(x_train2, y_train2)
+
+bestRF = gridRF.best_estimator_
+bestRF.fit(x, y)
 
 ###########################################################################
 ## Prevendo os resultados e colocando eles no arquivo de resultados
 ###########################################################################
-predictions = bestGB.predict(x_teste)
+predictions = bestRF.predict(x_teste)
 
 prediction_file = pd.DataFrame(predictions, columns=['inadimplente'])
 prediction_file = pd.concat([testId, prediction_file], axis=1)
 prediction_file = prediction_file.to_csv('./Data/ResultadosV3.csv', index=False)
-
-
-#prediction_file = pd.read_csv('./Data/Resultados.csv')
-#prediction_file.shape
