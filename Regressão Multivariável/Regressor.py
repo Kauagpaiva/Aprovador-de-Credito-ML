@@ -132,5 +132,5 @@ resposta = regressorGB.predict(x_teste)
 prediction_file = {'Id': testId.index , 'preco': resposta}
 prediction_file = pd.DataFrame(data=prediction_file)
 
-prediction_file.to_csv('Resultado.csv', index=False)
+prediction_file.to_csv('./Dados/Resultado.csv', index=False)
 

@@ -248,4 +248,4 @@ predictions = bestRF.predict(x_teste)
 
 prediction_file = pd.DataFrame(predictions, columns=['inadimplente'])
 prediction_file = pd.concat([testId, prediction_file], axis=1)
-prediction_file = prediction_file.to_csv('./Data/ResultadosV3.csv', index=False)
+prediction_file = prediction_file.to_csv('./Data/Resultados.csv', index=False)
