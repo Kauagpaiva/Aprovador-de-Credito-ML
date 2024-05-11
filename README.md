@@ -1,3 +1,3 @@
-# Introdução ao Aprendizado de Máquina:
+# Introduction to Machine Learning:
 
-Esse repositório contém as duas atividades desenvolvidas durante as aulas de Introdução ao Aprendizado de Máquina (EEL891), onde tive que desenvolver dois modelos, um utilizando técnicas de classificação para definir se alguém é ou não inadimplente e outro utilizando técnicas de regressão multivariável para estimar o valor de um imóvel.
+This repository contains the two activities developed during the Introduction to Machine Learning classes (EEL891), where I had to develop two models, one using classification techniques to determine whether someone is or isn't a defaulter, and the other using multivariable regression techniques to estimate the value of a property.
